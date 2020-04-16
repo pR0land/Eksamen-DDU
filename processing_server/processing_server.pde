@@ -84,7 +84,7 @@ void draw(){
     
     //hvis man har trykket i lokalefeltet
     String textShownLokale ="";
-    if(lokaleNrPressed == true && lokaleNumberEntered != ""){
+    if(lokaleNrPressed == true){
       if(halfSecondStage && lokaleNumberEntered == ""){
         textShownLokale = "|";
       }else if(halfSecondStage && lokaleNumberEntered != ""){
