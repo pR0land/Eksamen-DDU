@@ -18,6 +18,7 @@ void setup(){
  println(Server.ip());
  lokaleNrX = width/3;
  lokaleMaxX = width/3;
+ lokaler = new ArrayList<Lokale>(0);
 }
 void draw(){
   if(millis() > lastMillis +500){
@@ -101,6 +102,24 @@ void draw(){
       fill(0);
       text(textShownLokale,lokaleNrX+3,lokaleNrY+(inputBarHeight/2)+4);
     }
+    String textShownMennesker ="";
+    if(maxMenneskerPressed == true){
+      if(halfSecondStage && maxMenneskerEntered == ""){
+        textShownMennesker = "|";
+      }else if(halfSecondStage && maxMenneskerEntered != ""){
+        textShownMennesker = maxMenneskerEntered +"|";
+      }else{
+        textShownMennesker = maxMenneskerEntered; 
+      }
+    }else if(maxMenneskerPressed == false && maxMenneskerEntered != ""){
+        textShownMennesker = maxMenneskerEntered; 
+    }
+    if(textShownMennesker != null){
+      textAlign(CORNER);
+      textSize(13);
+      fill(0);
+      text(textShownMennesker,lokaleMaxX+3,lokaleMaxY+(inputBarHeight/2)+4);
+    }
     
   }else if(programState ==2){
     //får data fra vores client
@@ -118,7 +137,9 @@ void mouseClicked(){
     maxMenneskerPressed = true; 
     lokaleNrPressed = false;
   }else if(isInsideRect(width/2-(buttonWidth/2),230-(buttonHeight/2),buttonWidth,buttonHeight)){
-    
+    lokaler.add(new Lokale(int(lokaleNumberEntered),int(maxMenneskerEntered)));
+    lokaleNumberEntered ="";
+    maxMenneskerEntered ="";
   }
 }
 void keyPressed() {
@@ -128,6 +149,16 @@ void keyPressed() {
      println(lokaleNumberEntered);
    }else if(maxMenneskerPressed == true){
      maxMenneskerEntered += key;
+   }
+ }else if(keyCode == BACKSPACE){
+   if(lokaleNrPressed == true){
+     if(lokaleNumberEntered.length() >= 1){
+        lokaleNumberEntered = lokaleNumberEntered.substring(0,lokaleNumberEntered.length()-1);
+     }
+   }else if(maxMenneskerPressed == true){
+     if(maxMenneskerEntered.length() >= 1){
+        maxMenneskerEntered = maxMenneskerEntered.substring(0,maxMenneskerEntered.length()-1);
+     }
    }
  }
 }
