@@ -7,6 +7,7 @@ boolean lokaleNrPressed = false, maxMenneskerPressed = false, halfSecondStage = 
 long lastMillis;
 
 String lokaleNumberEntered = "", maxMenneskerEntered = "";
+int maxJ;
 
 ArrayList<Lokale> lokaler;
 
@@ -67,7 +68,7 @@ void draw(){
     strokeWeight(1);
     
     //opret lokale knap
-    if(isInsideRect(width/2-(buttonWidth/2),230-(buttonHeight/2),buttonWidth,buttonHeight)){
+    if(isInsideRect(width/12*5-(buttonWidth/2),230-(buttonHeight/2),buttonWidth,buttonHeight)){
      fill(230);
      strokeWeight(1.7);
     }else{
@@ -75,12 +76,29 @@ void draw(){
      strokeWeight(1.2);
     }
     rectMode(CORNER);
-    rect(width/2-(buttonWidth/2),230-(buttonHeight/2),buttonWidth,buttonHeight);
+    rect(width/12*5-(buttonWidth/2),230-(buttonHeight/2),buttonWidth,buttonHeight);
     rectMode(CORNER);
     textSize(10);
     fill(0);
     textAlign(CENTER);
-    text("OPRET LOKALE", width/2,233);
+    text("OPRET LOKALE", width/12*5,233);
+    textAlign(CORNER);
+    
+    //Setup færdig knap
+    if(isInsideRect(width/12*7-(buttonWidth/2),230-(buttonHeight/2),buttonWidth,buttonHeight)){
+     fill(230);
+     strokeWeight(1.7);
+    }else{
+     fill(240);
+     strokeWeight(1.2);
+    }
+    rectMode(CORNER);
+    rect(width/12*7-(buttonWidth/2),230-(buttonHeight/2),buttonWidth,buttonHeight);
+    rectMode(CORNER);
+    textSize(10);
+    fill(0);
+    textAlign(CENTER);
+    text("SETUP FÆRDIG", width/12*7,233);
     textAlign(CORNER);
     
     //hvis man har trykket i lokalefeltet
@@ -120,8 +138,20 @@ void draw(){
       fill(0);
       text(textShownMennesker,lokaleMaxX+3,lokaleMaxY+(inputBarHeight/2)+4);
     }
-    
+    int gangeIgennem = 0;
+    for(int i = 1; i<1+(int(1+(lokaler.size()/5))); i++){
+      if(lokaler.size()-((i-1)*5)>= 5){
+        maxJ = 5; 
+      }else if(lokaler.size()-(i*5) < 5){
+        maxJ = lokaler.size()%5; 
+      }
+      for(int j = 0; j<maxJ; j++){
+         lokaler.get(gangeIgennem).displayLokale(30+(j*110),(i-1)*50);
+         gangeIgennem++;
+      }
+    }
   }else if(programState ==2){
+    background(255);
     //får data fra vores client
     Client thisClient = testServer.available();
     if(thisClient != null){
@@ -136,10 +166,12 @@ void mouseClicked(){
   }else if(isInsideRect(lokaleMaxX,lokaleMaxY,inputBarWidth,inputBarHeight)){
     maxMenneskerPressed = true; 
     lokaleNrPressed = false;
-  }else if(isInsideRect(width/2-(buttonWidth/2),230-(buttonHeight/2),buttonWidth,buttonHeight)){
+  }else if(isInsideRect(width/12*5-(buttonWidth/2),230-(buttonHeight/2),buttonWidth,buttonHeight)){
     lokaler.add(new Lokale(int(lokaleNumberEntered),int(maxMenneskerEntered)));
     lokaleNumberEntered ="";
     maxMenneskerEntered ="";
+  }else if(isInsideRect(width/12*7-(buttonWidth/2),230-(buttonHeight/2),buttonWidth,buttonHeight)){
+    programState =2; 
   }
 }
 void keyPressed() {

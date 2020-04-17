@@ -3,6 +3,7 @@ class Lokale{
   int antalMennesker;
   color lokaleFarve;
   int menneskerMax;
+  public int displayX = 100, displayY =40;
   Lokale (int lN, int mM){
     this.lokaleNr = lN;
     this.menneskerMax = mM;
@@ -23,9 +24,20 @@ class Lokale{
       this.lokaleFarve = color(0,0,255);
     }
   }
-  void displayLokaler(int x){
+  void displayLokale(int x, int y){
     if(programState ==1){
-      
+      fill(255);
+      rectMode(CORNER);
+      strokeWeight(1.3);
+      rect(x,255+y,displayX,displayY);
+      textSize(12);
+      fill(0);
+      textAlign(CORNER,TOP);
+      text("Lokale Nr: "+this.lokaleNr,x+3,255+y+3);
+      textSize(12);
+      fill(0);
+      textAlign(CORNER,TOP);
+      text("Max Antal: "+this.menneskerMax,x+3,255+y+17);
     }else if(programState == 2){
       
     }
