@@ -157,6 +157,18 @@ void draw(){
     if(thisClient != null){
       println(thisClient.readString());
     }
+    int gangeIgennem = 0;
+    for(int i = 1; i<1+(int(1+(lokaler.size()/2))); i++){
+      if(lokaler.size()-((i-1)*2)>= 2){
+        maxJ = 2; 
+      }else if(lokaler.size()-(i*2) < 2){
+        maxJ = lokaler.size()%2; 
+      }
+      for(int j = 0; j<maxJ; j++){
+         lokaler.get(gangeIgennem).displayLokale(40+(j*280),(i-1)*60);
+         gangeIgennem++;
+      }
+    }
   }
 } 
 void mouseClicked(){

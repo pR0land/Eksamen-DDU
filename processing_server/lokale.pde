@@ -34,12 +34,21 @@ class Lokale{
       fill(0);
       textAlign(CORNER,TOP);
       text("Lokale Nr: "+this.lokaleNr,x+3,255+y+3);
+      text("Max Antal: "+this.menneskerMax,x+3,255+y+17);
+    }else if(programState == 2){
+      fill(255);
+      rectMode(CORNER);
+      strokeWeight(1.3);
+      rect(x,13+y,240,48);
       textSize(12);
       fill(0);
       textAlign(CORNER,TOP);
-      text("Max Antal: "+this.menneskerMax,x+3,255+y+17);
-    }else if(programState == 2){
-      
+      text("Lokale Nr: "+this.lokaleNr,x+3,13+y+3);
+      text("Personer i lokalet:",x+3,13+y+17);
+      fill(this.lokaleFarve);
+      text(this.antalMennesker,x+3+108,13+y+17);
+      fill(0);
+      text("Max Antal Personer: "+this.menneskerMax,x+3,13+y+31);
     }
   }
 }
