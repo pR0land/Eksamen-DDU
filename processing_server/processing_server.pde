@@ -167,7 +167,20 @@ void mouseClicked(){
     maxMenneskerPressed = true; 
     lokaleNrPressed = false;
   }else if(isInsideRect(width/12*5-(buttonWidth/2),230-(buttonHeight/2),buttonWidth,buttonHeight)){
-    lokaler.add(new Lokale(int(lokaleNumberEntered),int(maxMenneskerEntered)));
+    if(lokaler.size() > 0){
+      for(int i = 0; i<lokaler.size(); i++){
+        println(1);
+        if(lokaler.get(i).lokaleNr > int(lokaleNumberEntered)){
+          lokaler.add(i, new Lokale(int(lokaleNumberEntered),int(maxMenneskerEntered)));
+          break;
+        }else if(i == lokaler.size()-1){
+          lokaler.add(new Lokale(int(lokaleNumberEntered),int(maxMenneskerEntered)));
+          break;
+        }
+      }
+    }else{
+       lokaler.add(new Lokale(int(lokaleNumberEntered),int(maxMenneskerEntered)));
+    }
     lokaleNumberEntered ="";
     maxMenneskerEntered ="";
   }else if(isInsideRect(width/12*7-(buttonWidth/2),230-(buttonHeight/2),buttonWidth,buttonHeight)){
@@ -178,7 +191,7 @@ void keyPressed() {
  if(key >= '0' && key <= '9'){
    if(lokaleNrPressed == true){
      lokaleNumberEntered += key;
-     println(lokaleNumberEntered);
+     //println(lokaleNumberEntered);
    }else if(maxMenneskerPressed == true){
      maxMenneskerEntered += key;
    }
