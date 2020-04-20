@@ -12,7 +12,7 @@ int maxJ;
 ArrayList<Lokale> lokaler;
 
 Server testServer;
-
+int x =0;
 void setup(){
  size(600,600);
  testServer = new Server(this,7000);
@@ -27,7 +27,7 @@ void draw(){
     lastMillis = millis();
   }
   if(programState ==1){
-    background(255);
+    background(250);
     fill(0);
     textSize(40);
     textAlign(CENTER);
@@ -151,7 +151,7 @@ void draw(){
       }
     }
   }else if(programState ==2){
-    background(255);
+    background(250);
     //får data fra vores client
     Client thisClient = testServer.available();
     if(thisClient != null){
@@ -165,7 +165,7 @@ void draw(){
         maxJ = lokaler.size()%2; 
       }
       for(int j = 0; j<maxJ; j++){
-         lokaler.get(gangeIgennem).displayLokale(40+(j*280),(i-1)*60);
+         lokaler.get(gangeIgennem).displayLokale(66+(j*266),(i-1)*60);
          gangeIgennem++;
       }
     }
