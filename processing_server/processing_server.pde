@@ -12,7 +12,9 @@ int maxJ;
 ArrayList<Lokale> lokaler;
 
 Server testServer;
-int x =0;
+
+String lastClientInfo;
+
 void setup(){
  size(600,600);
  testServer = new Server(this,7000);
@@ -155,7 +157,18 @@ void draw(){
     //får data fra vores client
     Client thisClient = testServer.available();
     if(thisClient != null){
-      println(thisClient.readString());
+      lastClientInfo = thisClient.readString();
+      println(lastClientInfo);
+      int komma = lastClientInfo.indexOf(",");
+      int sensorLokale = int(lastClientInfo.substring(0,komma));
+      println(sensorLokale);
+      int antalILokalet = int(lastClientInfo.substring(komma+1));
+      println(antalILokalet);
+      for(int i = 0; i< lokaler.size(); i++){
+        if(sensorLokale == lokaler.get(i).lokaleNr){
+          lokaler.get(i).lokaleMennesker(antalILokalet);
+        }
+      }
     }
     int gangeIgennem = 0;
     for(int i = 1; i<1+(int(1+(lokaler.size()/2))); i++){
