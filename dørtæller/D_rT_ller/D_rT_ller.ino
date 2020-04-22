@@ -1,6 +1,6 @@
 #include <WiFi.h>
-const char* ssid = "FTTH_GI2416";
-const char* pass = "effak3omGiud";
+const char* ssid = "UserName";
+const char* pass = "PassWord";
 
 #define sensor1 33
 #define sensor2 32
