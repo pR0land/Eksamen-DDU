@@ -1,3 +1,4 @@
+// Vores class til lokalerne
 class Lokale{
   int lokaleNr;
   int antalMennesker;
@@ -8,6 +9,7 @@ class Lokale{
     this.menneskerMax = mM;
     this.antalMennesker = 0;
   }
+  //funktion som viser alt i lokalerne
   void displayLokale(int x, int y){
     if(programState ==1){
       fill(235);

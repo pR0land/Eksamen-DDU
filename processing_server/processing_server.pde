@@ -1,33 +1,50 @@
+// Processing library, som gør det muligt at opsætte en server
 import processing.net.*;
+
+// En interger som styrer hvilket stadie programmet er i
 int programState =1;
+
+// Varibaler til vores knapper og inputs i setup menuen
 int lokaleNrX, lokaleNrY = 130, lokaleMaxX, lokaleMaxY = 180; 
 int inputBarWidth = 200, inputBarHeight = 20, buttonWidth = 75, buttonHeight = 20;
 boolean lokaleNrPressed = false, maxMenneskerPressed = false, halfSecondStage = false;
 
+// En variabel til at holde styr på vores sidste timestamp, bruges til at lave en blinkende curser
 long lastMillis;
 
+// Strings til vores tasteturinputs
 String lokaleNumberEntered = "", maxMenneskerEntered = "";
+
+// En variabel som hjælper med hvor mange lokaler den skal tegne i sidste række
 int maxJ;
 
+// Vores liste som holder alle vores lokale-objekter
 ArrayList<Lokale> lokaler;
 
+//selve serveren
 Server testServer;
 
+//string til at holde informationen som clienten sender til os 
 String lastClientInfo;
 
 void setup(){
  size(600,600);
+ // Starter vores server
  testServer = new Server(this,7000);
  println(Server.ip());
+ 
  lokaleNrX = width/3;
  lokaleMaxX = width/3;
+ // Opretter en liste til vores lokaler
  lokaler = new ArrayList<Lokale>(0);
 }
 void draw(){
+  // Funktion som ændre vores halfSecondStage boolean
   if(millis() > lastMillis +500){
     halfSecondStage = !halfSecondStage;
     lastMillis = millis();
   }
+  // Setup del af koden
   if(programState ==1){
     background(250);
     fill(0);
@@ -122,6 +139,7 @@ void draw(){
       fill(0);
       text(textShownLokale,lokaleNrX+3,lokaleNrY+(inputBarHeight/2)+4);
     }
+    //Hvis man trykker i maks menneskefeltet
     String textShownMennesker ="";
     if(maxMenneskerPressed == true){
       if(halfSecondStage && maxMenneskerEntered == ""){
@@ -140,6 +158,7 @@ void draw(){
       fill(0);
       text(textShownMennesker,lokaleMaxX+3,lokaleMaxY+(inputBarHeight/2)+4);
     }
+    // Tegner alle lokalerne i menuen
     int gangeIgennem = 0;
     for(int i = 1; i<1+(int(1+(lokaler.size()/5))); i++){
       if(lokaler.size()-((i-1)*5)>= 5){
@@ -154,7 +173,7 @@ void draw(){
     }
   }else if(programState ==2){
     background(250);
-    //får data fra vores client
+    //får data fra vores client og skriver det på de rigtige lokaler
     Client thisClient = testServer.available();
     if(thisClient != null){
       lastClientInfo = thisClient.readString();
@@ -170,6 +189,7 @@ void draw(){
         }
       }
     }
+    // Tegner lokalerne i menuen
     int gangeIgennem = 0;
     for(int i = 1; i<1+(int(1+(lokaler.size()/2))); i++){
       if(lokaler.size()-((i-1)*2)>= 2){
@@ -184,6 +204,7 @@ void draw(){
     }
   }
 } 
+// holder styr på hva man clicker på med musen
 void mouseClicked(){
   if(isInsideRect(lokaleNrX,lokaleNrY,inputBarWidth,inputBarHeight)){
     lokaleNrPressed = true; 
@@ -212,26 +233,30 @@ void mouseClicked(){
     programState =2; 
   }
 }
+// hvilke taster bliver trykket på keyboarded
 void keyPressed() {
- if(key >= '0' && key <= '9'){
-   if(lokaleNrPressed == true){
-     lokaleNumberEntered += key;
-     //println(lokaleNumberEntered);
-   }else if(maxMenneskerPressed == true){
-     maxMenneskerEntered += key;
-   }
- }else if(keyCode == BACKSPACE){
-   if(lokaleNrPressed == true){
-     if(lokaleNumberEntered.length() >= 1){
-        lokaleNumberEntered = lokaleNumberEntered.substring(0,lokaleNumberEntered.length()-1);
+ if(programState == 1){
+   if(key >= '0' && key <= '9'){
+     if(lokaleNrPressed == true){
+       lokaleNumberEntered += key;
+       //println(lokaleNumberEntered);
+     }else if(maxMenneskerPressed == true){
+       maxMenneskerEntered += key;
      }
-   }else if(maxMenneskerPressed == true){
-     if(maxMenneskerEntered.length() >= 1){
-        maxMenneskerEntered = maxMenneskerEntered.substring(0,maxMenneskerEntered.length()-1);
+   }else if(keyCode == BACKSPACE){
+     if(lokaleNrPressed == true){
+       if(lokaleNumberEntered.length() >= 1){
+          lokaleNumberEntered = lokaleNumberEntered.substring(0,lokaleNumberEntered.length()-1);
+       }
+     }else if(maxMenneskerPressed == true){
+       if(maxMenneskerEntered.length() >= 1){
+          maxMenneskerEntered = maxMenneskerEntered.substring(0,maxMenneskerEntered.length()-1);
+       }
      }
    }
  }
 }
+// hitbox til rectangler
 boolean isInsideRect(int rx, int ry, int w, int h){
   if(mouseX > rx && mouseX < rx+w && mouseY > ry && mouseY < ry+h){
     return true;
