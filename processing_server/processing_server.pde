@@ -179,13 +179,15 @@ void draw(){
       lastClientInfo = thisClient.readString();
       println(lastClientInfo);
       int komma = lastClientInfo.indexOf(",");
-      int sensorLokale = int(lastClientInfo.substring(0,komma));
-      println(sensorLokale);
-      int antalILokalet = int(lastClientInfo.substring(komma+1));
-      println(antalILokalet);
-      for(int i = 0; i< lokaler.size(); i++){
-        if(sensorLokale == lokaler.get(i).lokaleNr){
-          lokaler.get(i).lokaleMennesker(antalILokalet);
+      if(komma >0){
+        int sensorLokale = int(lastClientInfo.substring(0,komma));
+        println(sensorLokale);
+        int antalILokalet = int(lastClientInfo.substring(komma+1));
+        println(antalILokalet);
+        for(int i = 0; i< lokaler.size(); i++){
+          if(sensorLokale == lokaler.get(i).lokaleNr){
+            lokaler.get(i).lokaleMennesker(antalILokalet);
+          }
         }
       }
     }
