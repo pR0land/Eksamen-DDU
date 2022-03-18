@@ -33,7 +33,7 @@ class Lokale{
       text("Personer i lokalet:"+ antalMennesker,x+3,13+y+17);
       fill(0);
       text("Max Antal Personer: "+this.menneskerMax,x+3,13+y+31);
-      if(antalMennesker == menneskerMax){
+      if(antalMennesker >= menneskerMax){
         strokeWeight(2);
         stroke(128,255,0);
         line(x+158,y+56,x+158,y+49);

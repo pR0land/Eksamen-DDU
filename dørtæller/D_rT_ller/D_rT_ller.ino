@@ -5,8 +5,8 @@
 #define TXD2 17
 //HardwareSerial Serial1(1);
 
-const char* ssid = "Username";
-const char* pass = "Password";
+const char* ssid = "USERNAME";
+const char* pass = "PASSWORD";
 
 String portRead;
 
